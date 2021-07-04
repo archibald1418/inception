@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+  wordpress_php:
+    depends_on:
+      - mariadb
+    container_name: wordpress_php
+    build:
+      context: ./wordpress_php
+      dockerfile: Dockerfile
+    volumes:
+        - "/home/ldonita/data/wordpress:/static"
+    # ports:
+    #   - "9000:9000"
+    #   - "3306:3306"
+    restart: unless-stopped
+    env_file:
+      - wordpress_php/.env
+    networks:
+      - inception_network
+
+  nginx:
+    depends_on:
+      - wordpress_php
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+        - "443:443"
+    env_file:
+      - nginx/.env
+    volumes:
+      - "/home/ldonita/data/wordpress:/static"
+    networks: 
+      - inception_network
+    restart: unless-stopped
+
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    volumes:
+      - "/home/ldonita/data/dbdata:/var/lib/mysql"
+    env_file:
+      - mariadb/.env
+    networks:
+      - inception_network
+    restart: unless-stopped
+
+networks:
+  inception_network:
+    name: inception_network
+    driver: bridge
