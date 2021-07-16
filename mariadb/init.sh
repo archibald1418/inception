@@ -21,6 +21,4 @@ echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password;
 
 rc-service mariadb stop;
 
-#exec "$@";
 /usr/bin/mysqld_safe;
-# tail -f /dev/null;
