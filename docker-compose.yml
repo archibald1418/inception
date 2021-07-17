@@ -48,6 +48,19 @@ services:
     networks:
       - inception_network
     restart: unless-stopped
+  
+  ftp-server:
+    container_name: ftp-server
+    build:
+      context: ./ftp-server
+      dockerfile: Dockerfile
+    volumes:
+      - "/home/ldonita/data/wordpress:/static"
+    env_file:
+      - ftp-server/.env
+    networks:
+      - inception_network
+    restart: unless-stopped
 
 networks:
   inception_network:
