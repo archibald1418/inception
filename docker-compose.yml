@@ -8,6 +8,7 @@ services:
     build:
       context: ./wordpress_php
       dockerfile: Dockerfile
+    image: wordpress_php
     volumes:
         - "/home/ldonita/data/wordpress:/static"
     # ports:
@@ -26,6 +27,7 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    image: nginx 
     ports:
         - "443:443"
     env_file:
@@ -41,6 +43,7 @@ services:
     build:
       context: ./mariadb
       dockerfile: Dockerfile
+    image: mariadb
     volumes:
       - "/home/ldonita/data/dbdata:/var/lib/mysql"
     env_file:
@@ -56,6 +59,7 @@ services:
     build:
       context: ./ftp-server
       dockerfile: Dockerfile
+    image: ftp-server
     volumes:
       - "/home/ldonita/data/wordpress:/static"
     env_file:
