@@ -19,7 +19,7 @@ useradd -m ${FTP_USER} \
 	&& yes ${FTP_PASS} | passwd ${FTP_USER};
 usermod -s /bin/bash ${FTP_USER};
 
-chmod -R  o+r /static; 
+chown -R root /static;
 
 /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config2;
 
