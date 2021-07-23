@@ -11,7 +11,7 @@ echo "DROP USER IF EXISTS '$MYSQL_USER'@'%';" | mysql -u root --skip-password;
 echo "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" | mysql -u root --skip-password;
 echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%';" | mysql -u root --skip-password;
 echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password;
-echo "ALTER USER root@localhost IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" | mysql -u root --skip-password;
+# echo "ALTER USER root@localhost IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" | mysql -u root --skip-password;
 
 #mysql -u root --skip-password -e "
 #CREATE DATABASE wordpress;
