@@ -13,7 +13,6 @@ up:
 	docker-compose -f ${YML_DIR} --env-file=./srcs/.env up -d
 down:
 	docker-compose -f ${YML_DIR} down
-	
 wordpress_php:
 	docker build -t wordpress_php ./srcs/wordpress_php/
 	docker run --name wordpress_php -d wordpress_php
