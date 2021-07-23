@@ -1,4 +1,0 @@
--- CREATE DATABASE wordpress;
--- CREATE USER "ldonita"@"localhost" IDENTIFIED BY "lolkek";
--- GRANT ALL PRIVILEGES ON wordpress.* TO "ldonita"@"localhost";
--- FLUSH PRIVILEGES;
