@@ -1,0 +1,109 @@
+version: '3'
+services:
+
+  wordpress_php:
+    depends_on:
+      - mariadb
+    container_name: wordpress_php
+    build:
+      context: ./wordpress_php
+      dockerfile: Dockerfile
+    image: wordpress_php
+    volumes:
+        - "/home/ldonita/data/wordpress:/static"
+    environment:
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DOMAIN_NAME=$DOMAIN_NAME
+      - ADMIN_USER=$ADMIN_USER
+      - ADMIN_PASSWORD=$ADMIN_PASSWORD
+      - ADMIN_EMAIL=$ADMIN_EMAIL
+      - EDITOR_USER=$EDITOR_USER
+      - EDITOR_EMAIL=$EDITOR_EMAIL
+      - EDITOR_PASSWORD=$EDITOR_PASSWORD
+    # ports:
+    #   - "9000:9000"
+    #   - "3306:3306"
+    restart: unless-stopped
+    # env_file:
+    #   - wordpress_php/.env
+    networks:
+      - inception_network
+
+  nginx:
+    depends_on:
+      - wordpress_php
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: nginx 
+    ports:
+        - "443:443"
+    # env_file:
+    #   - nginx/.env
+    volumes:
+      - "/home/ldonita/data/wordpress:/static"
+    environment:
+      - SUBJ=$SUBJ
+      - PATHCERT=$PATHCERT
+      - PATHKEY=$PATHKEY
+    networks: 
+      - inception_network
+    restart: unless-stopped
+
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    image: mariadb
+    volumes:
+      - "/home/ldonita/data/dbdata:/var/lib/mysql"
+    environment:
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    # env_file:
+    #   - mariadb/.env
+    networks:
+      - inception_network
+    restart: unless-stopped
+  
+  ftp-server:
+    depends_on:
+      - wordpress_php
+    container_name: ftp-server
+    build:
+      context: ./ftp-server
+      dockerfile: Dockerfile
+    image: ftp-server
+    volumes:
+      - "/home/ldonita/data/wordpress:/static"
+    environment:
+      - FTP_PASS=$FTP_PASS
+      - FTP_DIR=$FTP_DIR
+      - FTP_USER=$FTP_USER
+    # env_file:
+    #   - ftp-server/.env
+    networks:
+      - inception_network
+    ports:
+      - "8000:22"
+      # - "20-21:20-21"
+    restart: unless-stopped
+
+networks:
+  inception_network:
+    name: inception_network
+    driver: bridge
+
+#TODO:
+# volumes:
+#   driver_opts:
+#     type: "volume"
+#     o: "addr=10.40.0.199,nolock,soft,rw"
+#     device: ":/docker/example"
