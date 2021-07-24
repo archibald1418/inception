@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     image: wordpress_php
     volumes:
-        - "/home/ldonita/data/wordpress:/static"
+        - wordpress:/static
     environment:
       - DB_NAME=$DB_NAME
       - DB_USER=$DB_USER
@@ -23,12 +23,8 @@ services:
       - EDITOR_USER=$EDITOR_USER
       - EDITOR_EMAIL=$EDITOR_EMAIL
       - EDITOR_PASSWORD=$EDITOR_PASSWORD
-    # ports:
-    #   - "9000:9000"
-    #   - "3306:3306"
+      - SITE_TITLE=$SITE_TITLE
     restart: unless-stopped
-    # env_file:
-    #   - wordpress_php/.env
     networks:
       - inception_network
 
@@ -42,10 +38,8 @@ services:
     image: nginx 
     ports:
         - "443:443"
-    # env_file:
-    #   - nginx/.env
     volumes:
-      - "/home/ldonita/data/wordpress:/static"
+      - wordpress:/static
     environment:
       - SUBJ=$SUBJ
       - PATHCERT=$PATHCERT
@@ -61,14 +55,12 @@ services:
       dockerfile: Dockerfile
     image: mariadb
     volumes:
-      - "/home/ldonita/data/dbdata:/var/lib/mysql"
+      - dbdata:/var/lib/mysql
     environment:
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
       - MYSQL_DATABASE=$MYSQL_DATABASE
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-    # env_file:
-    #   - mariadb/.env
     networks:
       - inception_network
     restart: unless-stopped
@@ -82,18 +74,15 @@ services:
       dockerfile: Dockerfile
     image: ftp-server
     volumes:
-      - "/home/ldonita/data/wordpress:/static"
+      - wordpress:/static
     environment:
       - FTP_PASS=$FTP_PASS
       - FTP_DIR=$FTP_DIR
       - FTP_USER=$FTP_USER
-    # env_file:
-    #   - ftp-server/.env
     networks:
       - inception_network
     ports:
       - "8000:22"
-      # - "20-21:20-21"
     restart: unless-stopped
 
 networks:
@@ -101,9 +90,16 @@ networks:
     name: inception_network
     driver: bridge
 
-#TODO:
-# volumes:
-#   driver_opts:
-#     type: "volume"
-#     o: "addr=10.40.0.199,nolock,soft,rw"
-#     device: ":/docker/example"
+volumes:
+  dbdata:
+    name: dbdata
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ldonita/data/dbdata
+  wordpress:
+    name: wordpress
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ldonita/data/wordpress
