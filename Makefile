@@ -2,20 +2,21 @@ YML_DIR=./srcs/docker-compose.yml
 VOLUME_DIR=/home/ldonita/data
 
 all:
+	mkdir -p ${VOLUME_DIR}/wordpress
+	mkdir -p ${VOLUME_DIR}/dbdata
 	docker-compose -f ${YML_DIR} --env-file=./srcs/.env up --build -d
 clean:
-	rm -rf ${VOLUME_DIR}/*
-	docker rm nginx;
-	docker rm mariadb;
-	docker rm ftp-server;
-	docker rm wordpress_php;
+	docker stop $$(docker ps -qa);\
+	docker rm $$(docker ps -qa);\
+	docker rmi -f $$(docker images -qa);\
+	docker volume rm $$(docker volume ls -q);
+	#docker network rm $$(docker network ls -q)
 up:
-	docker-compose -f ${YML_DIR} --env-file=./srcs/.env up -d
+	docker-compose -f ${YML_DIR} --env-file=./srcs/.env up --build -d
 down:
 	docker-compose -f ${YML_DIR} down
-wordpress_php:
-	docker build -t wordpress_php ./srcs/wordpress_php/
-	docker run --name wordpress_php -d wordpress_php
+logs_all:
+	sudo docker-compose -f ${YML_DIR} logs
 re:
 	$(MAKE) down
 	$(MAKE) clean
