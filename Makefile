@@ -11,6 +11,9 @@ clean:
 	docker rmi -f $$(docker images -qa);\
 	docker volume rm $$(docker volume ls -q);
 	#docker network rm $$(docker network ls -q)
+fclean:
+	yes 'y' | docker system prune
+	yes 'y' | docker builder prune
 up:
 	docker-compose -f ${YML_DIR} --env-file=./srcs/.env up --build -d
 down:
