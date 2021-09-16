@@ -45,4 +45,4 @@ All the services are installed within the Dockerfiles.
 
 ### Entering the website
 
-* The website will be at https://localhost:443
+* The website is available at https://localhost:443
