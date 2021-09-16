@@ -29,6 +29,7 @@ Wordpress files are mounted into ```~/data/wordpress```
 
 #### Mac OS
 * Download Docker Desktop, Docker CLI or a Docker Virtual Machine
+	
 	[Docker Desktop download](https://docs.docker.com/desktop/mac/install/)
 * ```cd``` into the root of the project
 * run ```make``` 
