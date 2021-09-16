@@ -6,9 +6,13 @@ using Docker and Docker-Compose.
 ## Description
 
 A Docker cluster is a Wordpress website working inside a Docker Network with default options.
+
 Backend side is a MySql Database.
+
 Frontend side are Wordpress standard files.
-.php files are processed with NGINX's FAST-CGI module using php-fpm working as a service on a separate container.
+
+.php files are processed with NGINX's FAST-CGI module with php-fpm working as a service on a separate container.
+
 Wordpress files are changed on the basis of service_names and users inside the MySQL database.
 
 ### The resulting Docker Network will work just as described in the diagram below
