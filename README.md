@@ -17,7 +17,7 @@ Wordpress files are changed on the basis of service_names and users inside the M
 
 ### The resulting Docker Network will work just as described in the diagram below
 
-
+![Inception netowrk](./assets/Inception_network.png)
 
 ## Getting Started
 
