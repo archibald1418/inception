@@ -1,7 +1,7 @@
 # Inception
 
 This is an exercise on building a Docker container cluster inside a virtual machine (here, Debian 10)
-using Docker and Docker-Compose.
+using Docker, Docker-Compose and Docker Volume for data persistence.
 
 ## Description
 
@@ -19,17 +19,28 @@ Wordpress files are changed on the basis of service_names and users inside the M
 
 ![Inception netowrk](./assets/Inception_network.png)
 
+### Persistent data storage
+
+Database files are mounted into ```~/data/dbdata```
+
+Wordpress files are mounted into ```~/data/wordpress```
+
 ## Getting Started
 
-### Dependencies
+#### Mac OS
+* Download Docker Desktop, Docker CLI or a Docker Virtual Machine
+	[Docker Desktop download](https://docs.docker.com/desktop/mac/install/)
+* ```cd``` into the root of the project
+* run ```make``` 
+  
+#### Debian 10
+* In the root folder of the project run ```bash ./srcs/debian_setup.sh```
+	This will install all the necessary dependencies for Docker Engine
+* ```cd``` into the root of the project
+* run ```make```  
 
-Docker Desktop or a Docker Virtual Machine
+
 All the services are installed within the Dockerfiles.
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
 
 ### Executing program
 
