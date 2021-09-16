@@ -23,7 +23,7 @@ services:
       - EDITOR_USER=$EDITOR_USER
       - EDITOR_EMAIL=$EDITOR_EMAIL
       - EDITOR_PASSWORD=$EDITOR_PASSWORD
-      - SITE_TITLE=$SITE_TITLE
+      - SITE_TITLE=$SITE_TITLE 
     restart: unless-stopped
     networks:
       - inception_network
@@ -96,10 +96,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/ldonita/data/dbdata
+      device: ~/data/dbdata
   wordpress:
     name: wordpress
     driver_opts:
       type: none
       o: bind
-      device: /home/ldonita/data/wordpress
+      device: ~/data/wordpress
