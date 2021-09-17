@@ -3,6 +3,9 @@
 This is an exercise on building a Docker container cluster inside a virtual machine (here, Debian 10)
 using Docker, Docker-Compose and Docker Volume for data persistence.
 
+All the Dockerfiles are written by myself,
+the only pulls are Debian and Alpine
+
 ## Description
 
 A Docker cluster is a Wordpress website working inside a Docker Network with default options.
